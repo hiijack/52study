@@ -2,38 +2,37 @@
 
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { useRequest } from 'ahooks';
 import Search from '@/components/search';
 import Book from '@/components/book';
 import Pagination from './pagination';
+import PageNumber from './page-number';
 
-export default function BookList({ initData, totalPages }) {
-  const [books, setBooks] = useState(initData);
-  const [totalPgs, setTotalPgs] = useState(totalPages);
+export default function BookList({ initData = [], totalPages = 0 }) {
+  const {
+    data = { data: initData, totalPages },
+    run,
+    loading,
+  } = useRequest((term, page) => fetch(`/api/get-book?term=${term}&page=${page}`).then((res) => res.json()), {
+    manual: true,
+  });
+
   const [currentPage, setCurrentPage] = useState(1);
   const [query, setQuery] = useState('');
 
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [currentPage]);
-
-  async function queryBook(term: string, page: number) {
-    setQuery(term);
-    const res = await fetch(`/api/get-book?term=${term}&page=${page}`);
-    const resData = await res.json();
-    if (resData.code === 0) {
-      setBooks(resData.data);
-      setTotalPgs(resData.totalPages);
-    }
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const handleSearch = useDebouncedCallback((term: string) => {
     setCurrentPage(1);
-    queryBook(term, 1);
-  }, 300);
+    setQuery(term);
+    run(term, 1);
+  }, 500);
 
   const handleChange = (page: number) => {
     setCurrentPage(page);
-    queryBook(query, page);
+    run(query, page);
   };
 
   return (
@@ -41,13 +40,20 @@ export default function BookList({ initData, totalPages }) {
       <div className="my-3">
         <Search placeholder="搜索名字、标签" onSearch={handleSearch} />
       </div>
+      {loading && (
+        <div>
+          <i className="loading" />
+        </div>
+      )}
       <div className="divide-y divide-gray-200">
-        {books.map((d) => (
+        {data.data.map((d) => (
           <Book key={d.id} {...d} />
         ))}
-        {books.length === 0 && <p className="text-center p-8 text-gray-600">暂无相关书籍</p>}
+        {data.data.length === 0 && <p className="text-center p-8 text-gray-600">暂无相关书籍</p>}
       </div>
-      <Pagination totalPages={totalPgs} currentPage={currentPage} onChange={handleChange} />
+      <Pagination totalPages={data.totalPages} currentPage={currentPage}>
+        {(props) => <PageNumber key={props.page} onClick={handleChange} {...props} />}
+      </Pagination>
     </div>
   );
 }

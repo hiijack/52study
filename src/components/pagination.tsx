@@ -1,5 +1,3 @@
-'use client';
-
 import clsx from 'clsx';
 
 const generatePagination = (currentPage: number, totalPages: number) => {
@@ -38,11 +36,11 @@ const generatePagination = (currentPage: number, totalPages: number) => {
 export default function Pagination({
   totalPages,
   currentPage,
-  onChange,
+  children
 }: {
   totalPages: number;
   currentPage: number;
-  onChange;
+  children: (props) => React.ReactNode;
 }) {
   const allPages = generatePagination(currentPage, totalPages);
 
@@ -55,45 +53,19 @@ export default function Pagination({
           if (index === 0) position = 'first';
           if (index === allPages.length - 1) position = 'last';
           if (allPages.length === 1) position = 'single';
-          if (page.toString() === '...') position = 'middle';
+          if (String(page) === '...') position = 'middle';
 
           const isActive = currentPage === page;
 
-          return (
-            <PaginationNumber
-              key={page}
-              page={page}
-              position={position}
-              isActive={isActive}
-              onClick={isActive ? () => void 0 : () => onChange(page)}
-            />
-          );
+          const cls = clsx('h-7 w-7 text-center text-sm/6 border rounded-sm', {
+            'z-10 bg-blue-600 border-blue-600 text-white': isActive,
+            'border-gray-500 text-gray-500 hover:bg-gray-100': !isActive && position !== 'middle',
+            'text-gray-300': position === 'middle',
+          });
+          
+          return children({ page, position, isActive, cls });
         })}
       </div>
-    </div>
-  );
-}
-
-function PaginationNumber({
-  page,
-  isActive,
-  position,
-  onClick,
-}: {
-  page: number | string;
-  position?: 'first' | 'last' | 'middle' | 'single';
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  const className = clsx('h-7 w-7 text-center text-sm/6 border border-gray-500 rounded-sm', {
-    'z-10 bg-blue-600 border-blue-600 text-white': isActive,
-    'text-gray-500 hover:bg-gray-100': !isActive && position !== 'middle',
-    'text-gray-300': position === 'middle',
-  });
-
-  return (
-    <div className={className} onClick={onClick}>
-      {page}
     </div>
   );
 }
