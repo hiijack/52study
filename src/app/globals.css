@@ -1,0 +1,14 @@
+/* tailwindcss v4 删除了 @tailwind 指令 */
+@import 'tailwindcss';
+
+@theme {
+  --container-container: 85rem;
+}
+
+@utility max-w-container {
+  max-width: var(--container-container);
+}
+
+body {
+  /* background: #f7f9fb; */
+}

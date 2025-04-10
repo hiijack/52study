@@ -1,0 +1,33 @@
+{
+  "name": "52study",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@headlessui/react": "^2.2.1",
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/postcss": "^4.0.6",
+    "clsx": "^2.1.1",
+    "next": "^15.1.6",
+    "postcss": "^8.5.2",
+    "postgres": "^3.4.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.6",
+    "use-debounce": "^10.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.1",
+    "@types/react": "19.0.8",
+    "typescript": "5.7.3"
+  }
+}
