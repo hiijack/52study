@@ -40,7 +40,7 @@ function Modal({ id, title, description, tag, download_url, open: op }) {
                 <p className="text-sm text-gray-500">
                   <span>链接：</span>
                   <a
-                    className="text-blue-600"
+                    className="text-blue-500"
                     href={download_url}
                     target="_blank"
                     onClick={() => {

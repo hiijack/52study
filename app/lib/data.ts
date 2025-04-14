@@ -1,5 +1,5 @@
 import postgres from 'postgres';
-import { Book, Card } from './definitions';
+import { Book, Card, User } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -45,5 +45,19 @@ export async function fetchCardData() {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch card data.');
+  }
+}
+
+export async function getUser(email: string) {
+  try {
+    const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+    if (user.length > 0) {
+      return user[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
   }
 }

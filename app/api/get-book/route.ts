@@ -3,8 +3,8 @@ import { type NextRequest } from 'next/server'
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get('term');
-  const page = +searchParams.get('page');
+  const query = searchParams.get('term') || '';
+  const page = +searchParams.get('page') || 1;
   try {
     const data = await fetchBook(query, page);
     const totalPages = await fetchBookPages(query);

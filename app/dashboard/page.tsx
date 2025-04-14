@@ -1,8 +1,8 @@
-import Card from '@/components/card';
-import Table from '@/components/table';
 import { Suspense } from 'react';
+import Card from '@/app/components/card';
+import Table from '@/app/components/table';
+import { fetchCardData } from '@/app/lib/data';
 import CreateDialog from './components/create-dialog';
-import { fetchCardData } from '../lib/data';
 
 export default async function Dashboard(props: {
   searchParams?: Promise<{

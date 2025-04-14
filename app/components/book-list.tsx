@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { useRequest } from 'ahooks';
-import Search from '@/components/search';
-import Book from '@/components/book';
+import Search from './search';
+import Book from './book';
 import Pagination from './pagination';
 import PageNumber from './page-number';
 

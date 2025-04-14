@@ -14,3 +14,10 @@ export type Card = {
   total_view: number;
   total_download: number;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}

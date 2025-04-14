@@ -1,6 +1,6 @@
-import { fetchBook, fetchBookPages } from '@/app/lib/data';
-import BookList from '@/components/book-list';
-import '@/style/page.css';
+import { fetchBook, fetchBookPages } from './lib/data';
+import BookList from './components/book-list';
+import '@/app/style/page.css';
 // shadow-[0_16px_32px_-16px_rgba(0,0,0,.1)]
 
 export default async function Page() {
@@ -21,7 +21,7 @@ export default async function Page() {
         </div>
       </main>
       <footer className="max-w-container mx-auto p-4">
-        <p className="text-sm text-center text-gray-400">Powered by LunJZ</p>
+        <p className="text-sm text-center text-gray-400">Powered by LunJz</p>
       </footer>
     </>
   );

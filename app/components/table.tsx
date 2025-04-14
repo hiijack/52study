@@ -47,7 +47,7 @@ export default async function Table({ currentPage }) {
       </table>
       <Pagination totalPages={totalPages} currentPage={currentPage}>
         {({ page, cls }) => (
-          <Link href={`/dashboard?page=${page}`} className={cls}>
+          <Link key={page} href={`/dashboard?page=${page}`} className={cls}>
             {page}
           </Link>
         )}
