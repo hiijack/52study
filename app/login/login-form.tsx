@@ -44,7 +44,7 @@ export default function LoginForm() {
           className="mt-4 w-full h-10 rounded-lg bg-blue-500 px-4 text-sm text-center font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           aria-disabled={isPending}
         >
-          登录
+          {isPending ? '登录中' : '登录'}
         </button>
         <div className="flex h-8 items-end space-x-1">
           {/* Add form errors here */}

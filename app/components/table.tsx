@@ -17,10 +17,10 @@ export default async function Table({ currentPage }) {
             <th scope="col" className="px-3 py-4 font-medium">
               标签
             </th>
-            <th scope="col" className="px-3 py-4 font-medium">
+            <th scope="col" className="px-2 py-4 font-medium">
               浏览量
             </th>
-            <th scope="col" className="px-3 py-4 font-medium">
+            <th scope="col" className="px-2 py-4 font-medium">
               下载量
             </th>
             {/* <th scope="col" className="px-3 py-4 font-medium">
@@ -29,7 +29,7 @@ export default async function Table({ currentPage }) {
           <th scope="col" className="px-3 py-4 font-medium">
             Status
           </th> */}
-            <th scope="col" className="py-3 py-4 font-medium">
+            <th scope="col" className="px-3 py-4 font-medium">
               操作
             </th>
           </tr>
@@ -39,8 +39,11 @@ export default async function Table({ currentPage }) {
             <tr key={b.id} className="w-full border-b border-gray-200 text-sm last-of-type:border-none">
               <td className="whitespace-nowrap px-3 py-3">{b.name}</td>
               <td className="whitespace-nowrap px-3 py-3">{b.tag.join(',')}</td>
-              <td className="whitespace-nowrap px-3 py-3">{b.view_count}</td>
-              <td className="whitespace-nowrap px-3 py-3">{b.download_count}</td>
+              <td className="whitespace-nowrap px-2 py-3">{b.view_count}</td>
+              <td className="whitespace-nowrap px-2 py-3">{b.download_count}</td>
+              <td className="whitespace-nowrap px-3 py-3">
+                <a>编辑</a>
+              </td>
             </tr>
           ))}
         </tbody>

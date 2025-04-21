@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { authConfig } from '@/auth.config';
 import { getUser } from "./app/lib/data";
  
+// auth.ts，middleware.ts要与/app同级才能生效
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
