@@ -16,6 +16,7 @@ export default function CreateDialog() {
       method: 'POST',
       body: fd,
     });
+    console.log(res);
     const data = await res.json();
     if (data.code === 0) {
       router.refresh();
