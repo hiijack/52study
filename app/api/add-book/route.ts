@@ -1,6 +1,9 @@
 import { addBook } from '@/app/lib/actions';
 
-export async function POST(req: Request) {
+export async function POST(req) {
+  if (!req.auth) {
+    return Response.json({ code: -1, message: "Not authenticated" }, { status: 401 })
+  }
   const fd = await req.formData();
   const name = fd.get('name');
   const _tag = fd.get('tag');

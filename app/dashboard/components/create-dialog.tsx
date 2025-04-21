@@ -64,6 +64,7 @@ export default function CreateDialog() {
                           type="text"
                           placeholder="填写名字"
                           className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+                          required
                         />
                       </div>
                     </div>
@@ -80,6 +81,7 @@ export default function CreateDialog() {
                           type="text"
                           placeholder="填写标签"
                           className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+                          required
                         />
                       </div>
                     </div>
@@ -96,6 +98,7 @@ export default function CreateDialog() {
                           type="text"
                           placeholder="填写链接"
                           className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+                          required
                         />
                       </div>
                     </div>
@@ -112,6 +115,7 @@ export default function CreateDialog() {
                           rows={3}
                           placeholder="填写简介"
                           className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+                          required
                         />
                       </div>
                     </div>
@@ -122,7 +126,9 @@ export default function CreateDialog() {
                       type="submit"
                       className="rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white"
                       onClick={(e) => {
-                        addBook();
+                        if (formRef.current.reportValidity()) {
+                          addBook();
+                        }
                         e.preventDefault();
                       }}
                     >
