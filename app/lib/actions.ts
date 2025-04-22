@@ -14,6 +14,18 @@ export async function addBook(data) {
   `;
 }
 
+export async function updateBook(data) {
+  const { id, name, description, download_url, tag } = data;
+  await sql`
+    UPDATE book
+    SET name = ${name},
+      description = ${description},
+      download_url = ${download_url},
+      tag = ${tag}
+    where id = ${id}
+  `;
+}
+
 export async function updateViewCount(id: string) {
   await sql`
     UPDATE book

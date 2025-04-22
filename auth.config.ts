@@ -1,20 +1,18 @@
 import type { NextAuthConfig } from 'next-auth';
- 
+
 export const authConfig = {
   pages: {
     signIn: '/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      if (isLoggedIn) {
-        if (isOnDashboard) {
-          return true;
+    authorized({ auth, request: { nextUrl} }) {
+      if (nextUrl.pathname.startsWith('/api')) {
+        if (!auth) {
+          return Response.json({ code: -1, message: 'Not authenticated' }, { status: 401 });
         }
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        return true;
       }
-      return false;
+      return !!auth;
     },
   },
   providers: [], // Add providers with an empty array for now
