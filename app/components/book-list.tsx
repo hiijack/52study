@@ -41,7 +41,7 @@ export default function BookList({ initData = [], totalPages = 0 }) {
         <Search placeholder="搜索名字、标签" onSearch={handleSearch} />
       </div>
       {loading && (
-        <div>
+        <div className="text-center">
           <i className="loading" />
         </div>
       )}

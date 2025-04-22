@@ -13,7 +13,7 @@ export default function PaginationNumber({
 }) {
   
   return (
-    <div className={cls} onClick={isActive ? () => void 0 : () => onClick(page)}>
+    <div className={`${cls} cursor-pointer`} onClick={isActive ? () => void 0 : () => onClick(page)}>
       {page}
     </div>
   );

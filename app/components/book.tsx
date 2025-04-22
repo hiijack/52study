@@ -5,7 +5,7 @@ const Book = (props) => {
   const { id, name, description, view_count, download_count, tag, download_url } = props;
   return (
     <div className="py-4">
-      <Detail id={id} title={name} description={description} tag={tag} download_url={download_url} />
+      <h2 className="mb-2">{name}</h2>
       <div className="flex gap-x-2 mb-2">
         {tag.map((t) => (
           <span
@@ -16,7 +16,9 @@ const Book = (props) => {
           </span>
         ))}
       </div>
-      <p className="mb-2 text-sm text-gray-500 cursor-pointer">{description}</p>
+      <Detail id={id} title={name} description={description} tag={tag} download_url={download_url}>
+        <p className="mb-2 text-sm text-gray-500 cursor-pointer">{description}</p>
+      </Detail>
       <div className="flex gap-4">
         <span className="flex item-center gap-2">
           <EyeIcon className="h-4 w-4 text-gray-500" />

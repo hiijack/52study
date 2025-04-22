@@ -3,6 +3,7 @@ import Card from '@/app/components/card';
 import Table from '@/app/components/table';
 import { fetchCardData } from '@/app/lib/data';
 import { auth, signOut } from '@/auth';
+import Footer from '@/app/components/footer';
 import CreateDialog from './components/create-dialog';
 
 export default async function Dashboard(props: {
@@ -44,6 +45,7 @@ export default async function Dashboard(props: {
             <Card title="总资源" value={cardData.total_record} />
             <Card title="总浏览" value={cardData.total_view} />
             <Card title="总下载" value={cardData.total_download} />
+            <Card title="总搜索量" value="-" />
           </div>
           <div className="py-4">
             <CreateDialog />
@@ -59,9 +61,7 @@ export default async function Dashboard(props: {
           </div>
         </div>
       </main>
-      <footer className="max-w-container mx-auto p-4">
-        <p className="text-sm text-center text-gray-400">Powered by LunJz</p>
-      </footer>
+      <Footer />
     </>
   );
 }

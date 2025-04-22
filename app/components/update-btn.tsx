@@ -66,7 +66,7 @@ const UpdateBtn = ({ data }) => {
     document.body.appendChild(fragment);
   }
 
-  return <a onClick={createModal}>编辑</a>;
+  return <button className='cursor-pointer' onClick={createModal}>编辑</button>;
 };
 
 export default UpdateBtn;

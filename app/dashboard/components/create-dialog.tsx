@@ -26,7 +26,7 @@ export default function CreateDialog() {
   return (
     <section>
       <button
-        className="rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white"
+        className="cursor-pointer rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white"
         onClick={() => {
           setOpen(true);
         }}
