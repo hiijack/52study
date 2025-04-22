@@ -1,13 +1,19 @@
 import { useRef, useState } from 'react';
 
-const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (props) => Promise<void> }) => {
+const BookForm = ({
+  initValues = {},
+  onSubmit,
+}: {
+  initValues?: any;
+  onSubmit: (props) => Promise<void>;
+}) => {
   const formRef = useRef(null);
   const [isPending, setPending] = useState(false);
 
   return (
     <form id="book-form" className="mt-4" ref={formRef}>
-      <div className="flex items-center gap-4 mb-4">
-        <label htmlFor="name" className="block text-sm font-medium">
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="name" className="text-sm font-medium py-2">
           名字
         </label>
         <div className="relative rounded-md flex-auto">
@@ -17,15 +23,15 @@ const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (
               name="name"
               type="text"
               placeholder="填写名字"
-              className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
               defaultValue={initValues.name}
               required
             />
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mb-4">
-        <label htmlFor="tag" className="block text-sm font-medium">
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="tag" className="text-sm font-medium py-2">
           标签
         </label>
         <div className="relative rounded-md flex-auto">
@@ -35,15 +41,15 @@ const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (
               name="tag"
               type="text"
               placeholder="填写标签"
-              className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
               defaultValue={initValues.tag}
               required
             />
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mb-4">
-        <label htmlFor="download_url" className="block text-sm font-medium">
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="download_url" className="text-sm font-medium py-2">
           链接
         </label>
         <div className="relative rounded-md flex-auto">
@@ -53,15 +59,15 @@ const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (
               name="download_url"
               type="text"
               placeholder="填写链接"
-              className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
               defaultValue={initValues.download_url}
               required
             />
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4 mb-4">
-        <label htmlFor="description" className="block text-sm font-medium">
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="description" className="text-sm font-medium py-2">
           简介
         </label>
         <div className="relative rounded-md flex-auto">
@@ -71,7 +77,7 @@ const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (
               name="description"
               rows={8}
               placeholder="填写简介"
-              className="peer w-full block rounded-md border border-gray-200 py-2 pl-4 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
               defaultValue={initValues.description}
               required
             />
@@ -86,7 +92,6 @@ const BookForm = ({ initValues = {}, onSubmit }: { initValues?: any; onSubmit: (
           onClick={(e) => {
             setPending(true);
             if (formRef.current.reportValidity()) {
-              // addBook();
               onSubmit(formRef.current).then(() => {
                 setPending(false);
               });

@@ -12,25 +12,25 @@ export default async function Table({ currentPage }) {
       <table className="min-w-full text-gray-900 bg-white">
         <thead className="rounded-lg text-left text-sm font-normal bg-gray-100">
           <tr>
-            <th scope="col" className="px-3 py-4 font-medium">
+            <th scope="col" className="px-3 py-3 font-medium">
               名字
             </th>
-            <th scope="col" className="px-3 py-4 font-medium">
+            <th scope="col" className="px-3 py-3 font-medium">
               标签
             </th>
-            <th scope="col" className="px-2 py-4 font-medium">
+            <th scope="col" className="px-2 py-3 font-medium">
               浏览量
             </th>
-            <th scope="col" className="px-2 py-4 font-medium">
+            <th scope="col" className="px-2 py-3 font-medium">
               下载量
             </th>
-            {/* <th scope="col" className="px-3 py-4 font-medium">
+            {/* <th scope="col" className="px-3 py-3 font-medium">
             新增时间
           </th>
-          <th scope="col" className="px-3 py-4 font-medium">
+          <th scope="col" className="px-3 py-3 font-medium">
             Status
           </th> */}
-            <th scope="col" className="px-3 py-4 font-medium">
+            <th scope="col" className="px-3 py-3 font-medium">
               操作
             </th>
           </tr>
