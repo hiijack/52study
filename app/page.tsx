@@ -9,14 +9,14 @@ export default async function Page() {
   const totalPages = await fetchBookPages('');
   return (
     <>
-      <header id="title" className="sticky left-0 top-0 z-1 w-full bg-white border-b border-gray-200">
+      <header id="title" className="sticky left-0 top-0 z-1 w-full bg-white dark:text-white border-b border-gray-200 dark:border-white/20 dark:bg-gray-800">
         <div className="max-w-container mx-auto px-8">
-          <h1 className="py-4 text-3xl font-bold">The Library</h1>
+          <h1 className="py-4 text-3xl font-bold text-black">The Library</h1>
         </div>
       </header>
       <main>
         <div id="container" className="max-w-container mx-auto px-8">
-          <div className="max-w-4xl mt-4">
+          <div className="max-w-4xl pb-2">
             <BookList initData={data} totalPages={totalPages} />
           </div>
         </div>

@@ -3,7 +3,7 @@ import { Book, Card, User } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 7;
 export async function fetchBook(query: string, currentPage: number = 1) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {

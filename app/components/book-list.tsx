@@ -36,8 +36,8 @@ export default function BookList({ initData = [], totalPages = 0 }) {
   };
 
   return (
-    <div className="mb-10">
-      <div className="my-3">
+    <div className="min-h-100">
+      <div className="py-3">
         <Search placeholder="搜索名字、标签" onSearch={handleSearch} />
       </div>
       {loading && (
@@ -45,11 +45,13 @@ export default function BookList({ initData = [], totalPages = 0 }) {
           <i className="loading" />
         </div>
       )}
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y divide-gray-200 dark:divide-white/20">
         {data.data.map((d) => (
           <Book key={d.id} {...d} />
         ))}
-        {data.data.length === 0 && <p className="text-center p-8 text-gray-600">暂无相关书籍</p>}
+        {data.data.length === 0 && (
+          <p className="text-center p-8 text-gray-600 dark:text-gray-400">暂无相关书籍</p>
+        )}
       </div>
       <Pagination totalPages={data.totalPages} currentPage={currentPage}>
         {(props) => <PageNumber key={props.page} onClick={handleChange} {...props} />}

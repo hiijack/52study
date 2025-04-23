@@ -47,7 +47,6 @@ export default function LoginForm() {
           {isPending ? '登录中' : '登录'}
         </button>
         <div className="flex h-8 items-end space-x-1">
-          {/* Add form errors here */}
           {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />

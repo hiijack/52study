@@ -20,12 +20,12 @@ export default async function Dashboard(props: {
 
   return (
     <>
-      <header id="title" className="w-full bg-white border-b border-gray-200">
+      <header id="title" className="w-full border-b border-gray-200 text-black dark:border-white/20">
         <div className="max-w-container mx-auto px-8">
           <div className="flex items-center justify-between">
-            <h1 className="py-4 text-3xl font-bold">The Library Admin</h1>
+            <h1 className="py-4 text-3xl font-bold dark:text-white">The Library Admin</h1>
             <div className="flex gap-2 items-center">
-              <span>{session.user.name}</span>
+              <span className='dark:text-gray-400'>{session.user.name}</span>
               <a
                 className="text-sm text-blue-500 cursor-pointer"
                 onClick={async () => {
@@ -51,12 +51,10 @@ export default async function Dashboard(props: {
             <CreateDialog />
           </div>
           <div className="flow-root">
-            <div className="inline-block min-w-full align-middle">
-              <div className="rounded-lg">
-                <Suspense fallback={<div>loading</div>}>
-                  <Table currentPage={currentPage} />
-                </Suspense>
-              </div>
+            <div className="inline-block min-w-full min-h-100 align-middle">
+              <Suspense fallback={<div>loading</div>}>
+                <Table currentPage={currentPage} />
+              </Suspense>
             </div>
           </div>
         </div>

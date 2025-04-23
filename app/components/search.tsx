@@ -8,9 +8,9 @@ export default function Search({ placeholder, onSearch }) {
   // };
 
   return (
-    <div className="relative flex items-center rounded-md bg-gray-100 pl-3 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-blue-400">
+    <div className="relative flex items-center rounded-md bg-gray-100 dark:bg-white/5 pl-3 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-blue-400">
       <input
-        className="block grow py-1.5 pr-3 pl-6 text-base text-gray-600 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+        className="block grow py-1.5 pr-3 pl-6 text-base text-gray-600 dark:text-gray-200 placeholder:text-gray-400 focus:outline-0 sm:text-sm/6"
         placeholder={placeholder}
         onChange={(e) => {
           onSearch(e.target.value);

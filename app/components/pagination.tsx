@@ -28,7 +28,7 @@ export default function Pagination({
   const allPages = generatePagination(currentPage, totalPages);
 
   return (
-    <div className="inline-flex">
+    <div className="inline-flex py-2">
       <div className="flex -space-x-px gap-3">
         {allPages.map((page, index) => {
           let position: 'first' | 'last' | 'single' | 'middle' | undefined;
@@ -42,8 +42,8 @@ export default function Pagination({
 
           const cls = clsx('h-7 w-7 text-center text-sm/6 border rounded-sm', {
             'z-10 bg-blue-500 border-blue-500 text-white': isActive,
-            'border-gray-500 text-gray-500 hover:bg-gray-100': !isActive && position !== 'middle',
-            'text-gray-300': position === 'middle',
+            'border-gray-500 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400': !isActive && position !== 'middle',
+            'text-gray-300 dark:text-gray-400': position === 'middle',
           });
 
           return children({ page, isActive, cls });

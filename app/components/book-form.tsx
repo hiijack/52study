@@ -13,7 +13,7 @@ const BookForm = ({
   return (
     <form id="book-form" className="mt-4" ref={formRef}>
       <div className="flex gap-4 mb-4">
-        <label htmlFor="name" className="text-sm font-medium py-2">
+        <label htmlFor="name" className="text-sm font-medium py-2 text-black dark:text-white">
           名字
         </label>
         <div className="relative rounded-md flex-auto">
@@ -23,7 +23,7 @@ const BookForm = ({
               name="name"
               type="text"
               placeholder="填写名字"
-              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-600 placeholder:text-gray-400 dark:bg-white/5 dark:border-0 dark:focus:outline dark:focus:outline-blue-500 dark:text-gray-200"
               defaultValue={initValues.name}
               required
             />
@@ -31,7 +31,7 @@ const BookForm = ({
         </div>
       </div>
       <div className="flex gap-4 mb-4">
-        <label htmlFor="tag" className="text-sm font-medium py-2">
+        <label htmlFor="tag" className="text-sm font-medium py-2 text-black dark:text-white">
           标签
         </label>
         <div className="relative rounded-md flex-auto">
@@ -41,7 +41,7 @@ const BookForm = ({
               name="tag"
               type="text"
               placeholder="填写标签"
-              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-600 placeholder:text-gray-400 dark:bg-white/5 dark:border-0 dark:focus:outline dark:focus:outline-blue-500 dark:text-gray-200"
               defaultValue={initValues.tag}
               required
             />
@@ -49,7 +49,7 @@ const BookForm = ({
         </div>
       </div>
       <div className="flex gap-4 mb-4">
-        <label htmlFor="download_url" className="text-sm font-medium py-2">
+        <label htmlFor="download_url" className="text-sm font-medium py-2 text-black dark:text-white">
           链接
         </label>
         <div className="relative rounded-md flex-auto">
@@ -59,7 +59,7 @@ const BookForm = ({
               name="download_url"
               type="text"
               placeholder="填写链接"
-              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-600 placeholder:text-gray-400 dark:bg-white/5 dark:border-0 dark:focus:outline dark:focus:outline-blue-500 dark:text-gray-200"
               defaultValue={initValues.download_url}
               required
             />
@@ -67,7 +67,7 @@ const BookForm = ({
         </div>
       </div>
       <div className="flex gap-4 mb-4">
-        <label htmlFor="description" className="text-sm font-medium py-2">
+        <label htmlFor="description" className="text-sm font-medium py-2 text-black dark:text-white">
           简介
         </label>
         <div className="relative rounded-md flex-auto">
@@ -77,7 +77,7 @@ const BookForm = ({
               name="description"
               rows={8}
               placeholder="填写简介"
-              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500"
+              className="peer w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-600 placeholder:text-gray-400 dark:bg-white/5 dark:text-gray-200 dark:border-0 dark:focus:outline dark:focus:outline-blue-500 dark:text-gray-200"
               defaultValue={initValues.description}
               required
             />

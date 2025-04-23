@@ -9,8 +9,8 @@ export default async function Table({ currentPage }) {
 
   return (
     <>
-      <table className="min-w-full text-gray-900 bg-white">
-        <thead className="rounded-lg text-left text-sm font-normal bg-gray-100">
+      <table className="min-w-full text-gray-900 bg-white dark:bg-gray-800">
+        <thead className="rounded-lg text-left text-sm font-normal bg-gray-100 dark:bg-gray-900 dark:text-white">
           <tr>
             <th scope="col" className="px-3 py-3 font-medium">
               名字
@@ -35,9 +35,9 @@ export default async function Table({ currentPage }) {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white">
+        <tbody>
           {data.map((b) => (
-            <tr key={b.id} className="w-full border-b border-gray-200 text-sm last-of-type:border-none">
+            <tr key={b.id} className="w-full border-b border-gray-200 text-sm last-of-type:border-none dark:text-gray-400 dark:border-white/20">
               <td className="whitespace-nowrap px-3 py-3">{b.name}</td>
               <td className="whitespace-nowrap px-3 py-3">{b.tag.join(',')}</td>
               <td className="whitespace-nowrap px-2 py-3">{b.view_count}</td>
