@@ -27,6 +27,10 @@ export default function Pagination({
 }) {
   const allPages = generatePagination(currentPage, totalPages);
 
+  if (allPages.length === 1) {
+    return null;
+  }
+
   return (
     <div className="inline-flex py-2">
       <div className="flex -space-x-px gap-3">

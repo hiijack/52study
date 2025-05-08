@@ -34,7 +34,7 @@ function Modal({ id, title, description, tag, download_url, open: op }) {
                 ))}
               </div>
               <div className="mt-2">
-                <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
+                <p className="whitespace-pre-wrap text-sm text-gray-500 dark:text-gray-400">{description}</p>
               </div>
               <div className="mt-2">
                 <p className="text-sm text-gray-500 dark:text-gray-400">

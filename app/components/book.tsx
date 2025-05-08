@@ -20,11 +20,11 @@ const Book = (props) => {
         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 cursor-pointer">{description}</p>
       </Detail>
       <div className="flex gap-4">
-        <span className="flex item-center gap-2">
+        <span className="flex item-center gap-2" title="浏览量">
           <EyeIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
           <span className="text-sm/4 text-gray-500 dark:text-gray-400">{view_count}</span>
         </span>
-        <span className="flex item-center gap-2">
+        <span className="flex item-center gap-2" title="下载量">
           <ArrowDownTrayIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
           <span className="text-sm/4 text-gray-500 dark:text-gray-400">{download_count}</span>
         </span>
