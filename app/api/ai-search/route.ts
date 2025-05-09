@@ -4,6 +4,14 @@ import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/
 
 export async function POST(req: Request) {
   const { prompt } = await req.json();
+  if (!prompt) {
+    return new Response(JSON.stringify({ error: 'Invalid input' }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 
   const server_url = new URL('https://book-mcp-server.vercel.app/mcp');
 
@@ -27,10 +35,21 @@ export async function POST(req: Request) {
       prompt,
     });
 
-    return Response.json({ result: result.response.messages });
+    const { messages } = result.response;
+
+    if (messages.length === 1 && messages[0].content[0].type === 'text') {
+      return Response.json({ code: 0, data: [], message: messages[0].content[0].text });
+    }
+    if (messages[1] && messages[1].content[0].type === 'tool-result') {
+      return Response.json({
+        code: 0,
+        data: JSON.parse(messages[1].content[0].result.content[0].text),
+      });
+    }
+    return Response.json({ code: 0, data: [] });
   } catch (error) {
     console.log('ai search error:', error);
-    return Response.json({ code: -1, result: [] });
+    return Response.json({ code: -1, data: [] });
   } finally {
     await client?.close();
   }

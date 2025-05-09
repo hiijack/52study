@@ -26,3 +26,7 @@ body {
     no-repeat;
   background-size: 100%;
 }
+
+:root {
+  --theme-color: #2b7fff;
+}
