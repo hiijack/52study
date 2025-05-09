@@ -19,7 +19,13 @@ export async function POST(req: Request) {
 
   try {
     client = await createMCPClient({
-      transport: new StreamableHTTPClientTransport(server_url),
+      transport: new StreamableHTTPClientTransport(server_url, {
+        requestInit: {
+          headers: {
+            Origin: 'https://library.lunjz.top',
+          },
+        },
+      }),
     });
 
     const model = createOpenAICompatible({
