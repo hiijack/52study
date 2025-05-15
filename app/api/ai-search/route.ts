@@ -1,6 +1,9 @@
 import { generateText, experimental_createMCPClient as createMCPClient } from 'ai';
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export async function POST(req: Request) {
   const { prompt } = await req.json();
@@ -17,12 +20,14 @@ export async function POST(req: Request) {
 
   let client;
 
+  const access_token = await redis.get('access_token');
+
   try {
     client = await createMCPClient({
       transport: new StreamableHTTPClientTransport(server_url, {
         requestInit: {
           headers: {
-            Origin: 'https://library.lunjz.top',
+            authorization: `Bearer ${access_token}`,
           },
         },
       }),
