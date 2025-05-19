@@ -20,7 +20,23 @@ export async function POST(req: Request) {
 
   let client;
 
-  const access_token = await redis.get('access_token');
+  let access_token = await redis.get('access_token');
+
+  if (!access_token) {
+    const res = await fetch('https://book-mcp-server.vercel.app/api/token', {
+      method: 'POST',
+      body: JSON.stringify({ user: process.env.MCP_USER }),
+    });
+    const { code, data } = await res.json();
+    if (code === 0) {
+      access_token = data.access_token;
+      redis.set('access_token', data.access_token, {
+        ex: 3600,
+      });
+    } else {
+      console.error('fail to get mcp token');
+    }
+  }
 
   try {
     client = await createMCPClient({
