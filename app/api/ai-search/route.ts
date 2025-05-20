@@ -3,6 +3,8 @@ import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp';
 import { Redis } from '@upstash/redis';
 
+const SERVER_URL = 'https://book-mcp-server.vercel.app';
+
 const redis = Redis.fromEnv();
 
 export async function POST(req: Request) {
@@ -16,14 +18,14 @@ export async function POST(req: Request) {
     });
   }
 
-  const server_url = new URL('https://book-mcp-server.vercel.app/mcp');
+  const mcp_url = new URL(`${SERVER_URL}/mcp`);
 
   let client;
 
   let access_token = await redis.get('access_token');
 
   if (!access_token) {
-    const res = await fetch('https://book-mcp-server.vercel.app/api/token', {
+    const res = await fetch(`${SERVER_URL}/api/token`, {
       method: 'POST',
       body: JSON.stringify({ user: process.env.MCP_USER }),
     });
@@ -40,7 +42,7 @@ export async function POST(req: Request) {
 
   try {
     client = await createMCPClient({
-      transport: new StreamableHTTPClientTransport(server_url, {
+      transport: new StreamableHTTPClientTransport(mcp_url, {
         requestInit: {
           headers: {
             authorization: `Bearer ${access_token}`,
@@ -57,7 +59,7 @@ export async function POST(req: Request) {
 
     const result: any = await generateText({
       model: model.chatModel('qwen-plus'),
-      system: 'You are a book recommendation assistant.',
+      system: 'You are a book search assistant.',
       tools: await client.tools(),
       prompt,
     });
