@@ -55,18 +55,15 @@ const UpdateBtn = ({ data }) => {
   function createModal() {
     const fragment = document.createDocumentFragment();
     const root = createRoot(fragment);
-    root.render(
-      <UpdateDialog
-        data={data}
-        onClose={() => {
-          router.refresh();
-        }}
-      />
-    );
+    root.render(<UpdateDialog data={data} />);
     document.body.appendChild(fragment);
   }
 
-  return <button className='cursor-pointer' onClick={createModal}>编辑</button>;
+  return (
+    <button className="cursor-pointer" onClick={createModal}>
+      编辑
+    </button>
+  );
 };
 
 export default UpdateBtn;

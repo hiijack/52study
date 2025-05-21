@@ -1,11 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { useRouter } from 'next/navigation';
 import BookForm from '@/app/components/book-form';
 
 export default function CreateDialog() {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   async function addBook(form) {
@@ -16,7 +14,6 @@ export default function CreateDialog() {
     });
     const data = await res.json();
     if (data.code === 0) {
-      router.refresh();
       setOpen(false);
     } else {
       // empty

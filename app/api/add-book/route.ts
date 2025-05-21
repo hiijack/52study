@@ -1,4 +1,5 @@
 import { addBook } from '@/app/lib/actions';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req) {
   try {
@@ -11,6 +12,8 @@ export async function POST(req) {
     const tag = `{${_tag}}`;
 
     await addBook({ name, tag, description, download_url, date });
+    revalidatePath('/');
+    revalidatePath('/dashboard');
     return Response.json({ code: 0, message: 'success' });
   } catch (error) {
     console.log(error);

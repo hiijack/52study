@@ -4,6 +4,8 @@ import Footer from './components/footer';
 import '@/app/style/page.css';
 // shadow-[0_16px_32px_-16px_rgba(0,0,0,.1)]
 
+export const revalidate = 3600; // 1h
+
 export default async function Page() {
   const data = await fetchBook('');
   const totalPages = await fetchBookPages('');

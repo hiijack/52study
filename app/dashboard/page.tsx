@@ -6,6 +6,8 @@ import { auth, signOut } from '@/auth';
 import Footer from '@/app/components/footer';
 import CreateDialog from './components/create-dialog';
 
+export const revalidate = 3600;
+
 export default async function Dashboard(props: {
   searchParams?: Promise<{
     query?: string;

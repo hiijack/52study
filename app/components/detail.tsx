@@ -8,9 +8,7 @@ export default function Detail({ id, title, description, tag, download_url, chil
       className="cursor-pointer"
       onClick={() => {
         fetch(`/api/detail?id=${id}`, {
-          next: {
-            revalidate: 3600,
-          },
+          cache: 'force-cache',
         });
         Modal.info({ id, title, description, tag, download_url });
       }}

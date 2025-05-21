@@ -1,4 +1,5 @@
 import { updateBook } from '@/app/lib/actions';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req) {
   // todo: check id
@@ -12,6 +13,8 @@ export async function POST(req) {
     const tag = `{${_tag}}`;
 
     await updateBook({ id, name, tag, description, download_url });
+    revalidatePath('/');
+    revalidatePath('/dashboard');
     return Response.json({ code: 0, message: 'success' });
   } catch (error) {
     console.log(error);
