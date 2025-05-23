@@ -1,5 +1,6 @@
 import React from 'react';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Viewport, Metadata } from 'next';
 import './globals.css';
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-white dark:bg-gray-800 duration-150 ease-in-out">
         {children}
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>
