@@ -1,6 +1,7 @@
 import { updateBook } from '@/app/lib/actions';
 import { revalidatePath } from 'next/cache';
 
+// todo check auth
 export async function POST(req) {
   // todo: check id
   try {

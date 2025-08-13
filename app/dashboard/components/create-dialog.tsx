@@ -8,7 +8,7 @@ export default function CreateDialog() {
 
   async function addBook(form) {
     const fd = new FormData(form);
-    const res = await fetch('/api/update-book', {
+    const res = await fetch('/api/add-book', {
       method: 'POST',
       body: fd,
     });

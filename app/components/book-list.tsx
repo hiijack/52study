@@ -5,7 +5,6 @@ import { useRequest } from 'ahooks';
 import Search from './search';
 import Book from './book';
 import Pagination from './pagination';
-import PageNumber from './page-number';
 import { queryBook } from '../lib/service';
 
 export default function BookList({ initData = [], totalPages = 0 }) {
@@ -56,13 +55,21 @@ export default function BookList({ initData = [], totalPages = 0 }) {
         {data.data.map((d) => (
           <Book key={d.id} {...d} />
         ))}
-        {(!loading && data.data.length === 0 && !data.message) && (
+        {!loading && data.data.length === 0 && !data.message && (
           <p className="text-center p-8 text-gray-600 dark:text-gray-400">暂无相关书籍</p>
         )}
       </div>
       {data.totalPages && (
         <Pagination totalPages={data.totalPages} currentPage={currentPage}>
-          {(props) => <PageNumber key={props.page} onClick={handleChange} {...props} />}
+          {({ cls, isActive, page }) => (
+            <div
+              key={page}
+              className={`${cls} cursor-pointer`}
+              onClick={isActive ? () => void 0 : () => handleChange(page)}
+            >
+              {page}
+            </div>
+          )}
         </Pagination>
       )}
     </div>

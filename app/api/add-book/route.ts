@@ -1,6 +1,7 @@
 import { addBook } from '@/app/lib/actions';
 import { revalidatePath } from 'next/cache';
 
+// todo check auth
 export async function POST(req) {
   try {
     const fd = await req.formData();

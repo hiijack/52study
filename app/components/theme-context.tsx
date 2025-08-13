@@ -10,7 +10,9 @@ const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
-    setTheme(stored);
+    if (stored) {
+      setTheme(stored);
+    }
     document.documentElement.dataset.theme = stored;
   }, []);
 
