@@ -3,7 +3,7 @@ import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp';
 import { Redis } from '@upstash/redis';
 
-const SERVER_URL = 'https://book-mcp-server.vercel.app';
+const MCP_SERVER_URL = 'https://book-mcp-server.vercel.app';
 
 const redis = Redis.fromEnv();
 
@@ -18,23 +18,22 @@ export async function POST(req: Request) {
     });
   }
 
-  const mcp_url = new URL(`${SERVER_URL}/mcp`);
+  const mcp_url = new URL(`${MCP_SERVER_URL}/mcp`);
 
   let client;
 
-  let access_token = await redis.get('access_token');
+  let access_token = await redis.get('mcp_access_token');
 
   if (!access_token) {
-    const res = await fetch(`${SERVER_URL}/api/token`, {
+    // /api/token 这个应为login
+    const res = await fetch(`${MCP_SERVER_URL}/api/token`, {
       method: 'POST',
       body: JSON.stringify({ user: process.env.MCP_USER }),
     });
     const { code, data } = await res.json();
     if (code === 0) {
       access_token = data.access_token;
-      redis.set('access_token', data.access_token, {
-        ex: 3600,
-      });
+      redis.setex('mcp_access_token', 3600, data.access_token);
     } else {
       console.error('fail to get mcp token');
     }

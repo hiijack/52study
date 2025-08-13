@@ -5,6 +5,7 @@ import { fetchCardData } from '@/app/lib/data';
 import { auth, signOut } from '@/auth';
 import Footer from '@/app/components/footer';
 import CreateDialog from './components/create-dialog';
+import { redirect } from 'next/navigation';
 
 export const revalidate = 3600;
 
@@ -19,6 +20,10 @@ export default async function Dashboard(props: {
   const currentPage = Number(searchParams?.page) || 1;
   const cardData = await fetchCardData();
   const session = await auth();
+  // console.log(session.accessToken);
+  if (!session) {
+    redirect('/login');
+  }
 
   return (
     <>
@@ -27,11 +32,12 @@ export default async function Dashboard(props: {
           <div className="flex items-center justify-between">
             <h1 className="py-4 text-3xl font-bold dark:text-white">The Library Admin</h1>
             <div className="flex gap-2 items-center">
-              <span className='dark:text-gray-400'>{session.user.name}</span>
+              <span className="dark:text-gray-400">{session.user.name}</span>
               <a
                 className="text-sm text-blue-500 cursor-pointer"
                 onClick={async () => {
                   'use server';
+                  // await redis.del(`user-session:${session.user.id}`);
                   await signOut({ redirectTo: '/login' });
                 }}
               >

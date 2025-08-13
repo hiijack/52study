@@ -1,19 +1,27 @@
+import { JWT } from 'next-auth/jwt';
 import type { NextAuthConfig } from 'next-auth';
 
+declare module 'next-auth' {
+  interface User {
+    accessToken: string;
+    refreshToken: string;
+  }
+  interface Session {
+    accessToken: string;
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    accessToken: string;
+    accessTokenExpires: number;
+  }
+}
+
+// https://authjs.dev/getting-started/migrating-to-v5#authenticating-server-side
 export const authConfig = {
   pages: {
     signIn: '/login',
-  },
-  callbacks: {
-    authorized({ auth, request: { nextUrl} }) {
-      if (nextUrl.pathname.startsWith('/api')) {
-        if (!auth) {
-          return Response.json({ code: -1, message: 'Not authenticated' }, { status: 401 });
-        }
-        return true;
-      }
-      return !!auth;
-    },
   },
   providers: [],
 } satisfies NextAuthConfig;
