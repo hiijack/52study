@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { useRouter } from 'next/navigation';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import BookForm from './book-form';
 
@@ -50,7 +49,6 @@ function UpdateDialog(props) {
 }
 
 const UpdateBtn = ({ data }) => {
-  const router = useRouter();
 
   function createModal() {
     const fragment = document.createDocumentFragment();
