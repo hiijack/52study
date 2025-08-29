@@ -17,6 +17,7 @@ export default function LoginForm() {
               <input
                 className="peer block w-full rounded-md border border-gray-300 py-[9px] pl-10 text-sm placeholder:text-gray-500"
                 id="email"
+                type="email"
                 name="email"
                 placeholder="用户名"
                 required

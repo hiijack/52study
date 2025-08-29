@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
+import { z } from 'zod';
 import { generateAccessToken, refreshAccessToken } from '@/app/lib/service';
 import { authConfig } from '@/auth.config';
 import { getUser } from './app/lib/data';
@@ -40,21 +41,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: {},
-        password: {},
+        email: {
+          type: "email"
+        },
+        password: {
+          type: 'password'
+        },
       },
       async authorize(credentials) {
-        const { email, password }: any = credentials;
-        const user = await getUser(email);
-        if (!user) {
-          // throw new Error("Invalid credentials.");
-          return null;
+        const parsedCredentials = z
+          .object({ email: z.email(), password: z.string().min(6) })
+          .safeParse(credentials);
+
+        if (parsedCredentials.success) {
+          const { email, password } = parsedCredentials.data;
+          const user = await getUser(email);
+          if (!user) {
+            // throw new Error("Invalid credentials.");
+            return null;
+          }
+          const matched = bcrypt.compare(password, user.password);
+          if (matched) {
+            const tokens = await generateAccessToken(user.id);
+            return { ...user, ...tokens };
+          }
         }
-        const matched = bcrypt.compare(password, user.password);
-        if (matched) {
-          const tokens = await generateAccessToken(user.id);
-          return { ...user, ...tokens };
-        }
+
         return null;
       },
     }),
