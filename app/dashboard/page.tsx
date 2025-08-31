@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { Redis } from '@upstash/redis';
 import Card from '@/app/components/card';
 import Table from '@/app/components/table';
 import { fetchCardData } from '@/app/lib/data';
@@ -20,7 +21,6 @@ export default async function Dashboard(props: {
   const currentPage = Number(searchParams?.page) || 1;
   const cardData = await fetchCardData();
   const session = await auth();
-  // console.log(session.accessToken);
   if (!session) {
     redirect('/login');
   }
@@ -33,16 +33,18 @@ export default async function Dashboard(props: {
             <h1 className="py-4 text-3xl font-bold dark:text-white">The Library Admin</h1>
             <div className="flex gap-2 items-center">
               <span className="dark:text-gray-400">{session.user.name}</span>
-              <a
-                className="text-sm text-blue-500 cursor-pointer"
-                onClick={async () => {
+              <form
+                action={async () => {
                   'use server';
-                  // await redis.del(`user-session:${session.user.id}`);
+                  const redis = Redis.fromEnv();
+                  redis.del(`refresh:${session.refreshToken}`);
                   await signOut({ redirectTo: '/login' });
                 }}
               >
-                登出
-              </a>
+                <button className="text-sm text-blue-500 cursor-pointer">
+                  登出
+                </button>
+              </form>
             </div>
           </div>
         </div>

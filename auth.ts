@@ -26,6 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken; // todo
       return session;
     },
     authorized({ auth, request: { nextUrl } }) {
