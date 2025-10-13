@@ -2,6 +2,7 @@ import { generateText, experimental_createMCPClient as createMCPClient } from 'a
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp';
 import { Redis } from '@upstash/redis';
+import { addSearch } from '@/app/lib/actions';
 
 const MCP_SERVER_URL = 'https://book-mcp-server.vercel.app';
 
@@ -69,6 +70,9 @@ export async function POST(req: Request) {
       return Response.json({ code: 0, data: [], message: messages[0].content[0].text });
     }
     if (messages[1] && messages[1].content[0].type === 'tool-result') {
+      const { toolName, args } = messages[0].content[0];
+      const params = args.type ? args.type[0] : null; // todo
+      await addSearch({ content: prompt, tool: toolName, params });
       return Response.json({
         code: 0,
         data: JSON.parse(messages[1].content[0].result.content[0].text),

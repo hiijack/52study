@@ -55,7 +55,7 @@ export default async function Dashboard(props: {
             <Card title="总资源" value={cardData.total_record} />
             <Card title="总浏览" value={cardData.total_view} />
             <Card title="总下载" value={cardData.total_download} />
-            <Card title="总搜索量" value="-" />
+            <Card title="AI搜索量" value={cardData.total_search} />
           </div>
           <div className="py-4">
             <CreateDialog />

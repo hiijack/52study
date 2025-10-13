@@ -35,12 +35,22 @@ export async function fetchBookPages(query: string) {
 
 export async function fetchCardData() {
   try {
-    const data =
-      await sql<Card[]>`
-      SELECT COUNT(book.id) AS total_record,
-        SUM(book.view_count) AS total_view,
-        SUM(book.download_count) AS total_download
-      FROM book`;
+    // const bookCount = await sql`
+    //   SELECT COUNT(book.id) AS total_record,
+    //     SUM(book.view_count) AS total_view,
+    //     SUM(book.download_count) AS total_download
+    //   FROM book`;
+    // const searchCount = await sql`
+    //   SELECT COUNT(aisearch.id) AS total_search
+    //   FROM aisearch`;
+    // return { ...bookCount[0], ...searchCount[0] };
+    const data = await sql<Card[]>`
+      SELECT
+      (SELECT COUNT(book.id) FROM book) AS total_record,
+      (SELECT SUM(book.view_count) FROM book) AS total_view,
+      (SELECT SUM(book.download_count) FROM book) AS total_download,
+      (SELECT COUNT(aisearch.id) FROM aisearch) AS total_search;
+    `;
     return data[0];
   } catch (error) {
     console.error('Database Error:', error);

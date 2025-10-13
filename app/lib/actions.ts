@@ -60,3 +60,11 @@ export async function authenticate(
     throw error;
   }
 }
+
+export async function addSearch(data) {
+  const { content, tool, params } = data;
+  await sql`
+    INSERT INTO aisearch (content, tool, params)
+    VALUES (${content}, ${tool}, ${params})
+  `;
+}

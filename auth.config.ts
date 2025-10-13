@@ -19,7 +19,7 @@ declare module 'next-auth/jwt' {
     accessTokenExpires: number;
   }
 }
-
+// jwt session default maxAge 30days
 // https://authjs.dev/getting-started/migrating-to-v5#authenticating-server-side
 export const authConfig = {
   pages: {

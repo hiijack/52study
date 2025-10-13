@@ -13,6 +13,7 @@ export type Card = {
   total_record: number;
   total_view: number;
   total_download: number;
+  total_search: number;
 };
 
 export type User = {
