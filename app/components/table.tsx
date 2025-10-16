@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { fetchBook, fetchBookPages } from '@/app/lib/data';
 import Pagination from './pagination';
 import UpdateBtn from './update-btn';
+import DelBtn from '../dashboard/components/del-btn';
 
 export default async function Table({ currentPage }) {
-  const data = await fetchBook('', currentPage);
+  const data = await fetchBook([''], currentPage);
   const totalPages = await fetchBookPages('');
 
   return (
@@ -43,7 +44,10 @@ export default async function Table({ currentPage }) {
               <td className="whitespace-nowrap px-2 py-3">{b.view_count}</td>
               <td className="whitespace-nowrap px-2 py-3">{b.download_count}</td>
               <td className="whitespace-nowrap px-3 py-3">
-                <UpdateBtn data={b} />
+                <div className='flex gap-x-2'>
+                  <UpdateBtn data={b} />
+                  <DelBtn id={b.id} name={b.name} />
+                </div>
               </td>
             </tr>
           ))}

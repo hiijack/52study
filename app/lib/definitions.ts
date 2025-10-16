@@ -22,3 +22,13 @@ export type User = {
   email: string;
   password: string;
 }
+
+export type SearchTrend= {
+  date: string;
+  count: number;
+}
+
+export type SearchType = {
+  type: string;
+  count: number;
+};

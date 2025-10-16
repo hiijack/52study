@@ -1,15 +1,16 @@
 import postgres from 'postgres';
-import { Book, Card, User } from './definitions';
+import { Book, Card, SearchTrend, SearchType, User } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const ITEMS_PER_PAGE = 7;
-export async function fetchBook(query: string, currentPage: number = 1) {
+export async function fetchBook(query: string[] = [''], currentPage: number = 1) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  const nq = `{${query.map((q) => `%${q}%`)}}`;
   try {
     const data = await sql<Book[]>`SELECT * FROM book
-      WHERE book.name ILIKE ${`%${query}%`} OR
-        book.tag::text ILIKE ${`%${query}%`}
+      WHERE book.name ILIKE ANY (${nq}) OR
+        book.tag::text ILIKE ANY (${nq})
       ORDER BY book.date desc
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
     return data;
@@ -69,5 +70,47 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function fetchPopularBooks() {
+  try {
+    const data = await sql<Book[]>`SELECT * FROM book
+      ORDER BY book.view_count desc
+      LIMIT 5`;
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch book pages data.');
+  }
+}
+
+export async function fetchSearchTrend() {
+  try {
+    const data = await sql<SearchTrend[]>`
+    SELECT TO_CHAR(date_trunc('day', aisearch.createat), 'YYYY-MM-DD') AS date,
+      COUNT(aisearch.id) AS count
+      FROM aisearch
+      GROUP BY date
+      ORDER BY date`;
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch book pages data.');
+  }
+}
+
+export async function fetchSearchType() {
+  try {
+    const data = await sql<SearchType[]>`SELECT aisearch.params AS type,
+      count(aisearch.params) AS count
+      FROM aisearch
+      where tool = 'get-book'
+      GROUP BY type
+      ORDER BY count desc`;
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch book pages data.');
   }
 }

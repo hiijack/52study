@@ -39,7 +39,7 @@ export default function BookList({ initData = [], totalPages = 0 }) {
   };
 
   return (
-    <div className="min-h-100">
+    <div className="lg:w-4xl min-h-50 mb-2">
       <div className="py-3">
         <Search placeholder="想看些什么书？" onSearch={handleSearch} />
       </div>

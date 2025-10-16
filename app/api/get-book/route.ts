@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   const query = searchParams.get('term') || '';
   const page = +searchParams.get('page') || 1;
   try {
-    const data = await fetchBook(query, page);
+    const data = await fetchBook([''], page);
     const totalPages = await fetchBookPages(query);
     return Response.json({ code: 0, data, totalPages });
   } catch (error) {
