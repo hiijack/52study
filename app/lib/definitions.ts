@@ -9,12 +9,18 @@ export type Book = {
   date: string;
 };
 
-export type Card = {
+export type BookCard = {
   total_record: number;
   total_view: number;
   total_download: number;
-  total_search: number;
+  total_tag: number;
 };
+
+export type SearchCard = {
+  total_search: number;
+  search_type: number;
+  popular_search: number;
+}
 
 export type User = {
   id: string;

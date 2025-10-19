@@ -1,7 +1,8 @@
 'use server';
 
-import { signIn } from "@/auth";
-import { AuthError } from "next-auth";
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
@@ -12,6 +13,8 @@ export async function addBook(data) {
     INSERT INTO book (name, description, download_url, tag, date)
     VALUES (${name}, ${description}, ${download_url}, ${tag}, ${date})
   `;
+  revalidatePath('/');
+  revalidatePath('/dashboard');
 }
 
 export async function updateBook(data) {
@@ -24,6 +27,8 @@ export async function updateBook(data) {
       tag = ${tag}
     where id = ${id}
   `;
+  revalidatePath('/');
+  revalidatePath('/dashboard');
 }
 
 export async function updateViewCount(id: string) {
@@ -32,6 +37,7 @@ export async function updateViewCount(id: string) {
     SET view_count = view_count + 1
     WHERE id = ${id}
   `;
+  revalidatePath('/');
 }
 
 export async function updateDownloadCount(id: string) {
@@ -40,12 +46,10 @@ export async function updateDownloadCount(id: string) {
     SET download_count = download_count + 1
     WHERE id = ${id}
   `;
+  revalidatePath('/');
 }
 
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-) {
+export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
     await signIn('credentials', formData);
   } catch (error) {
@@ -67,4 +71,19 @@ export async function addSearch(data) {
     INSERT INTO aisearch (content, tool, params)
     VALUES (${content}, ${tool}, ${params})
   `;
+  revalidatePath('/dashboard');
+}
+
+export async function deleteBook(id) {
+  try {
+    await sql`
+      DELETE FROM book WHERE id = ${id} ;
+    `;
+    revalidatePath('/');
+    revalidatePath('/dashboard');
+    return true;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to delete book.');
+  }
 }

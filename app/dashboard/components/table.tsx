@@ -1,15 +1,17 @@
 import Link from 'next/link';
 import { fetchBook, fetchBookPages } from '@/app/lib/data';
-import Pagination from './pagination';
+import Pagination from '@/app/components/pagination';
 import UpdateBtn from './update-btn';
-import DelBtn from '../dashboard/components/del-btn';
+import DelBtn from './del-btn';
+import TableSearch from './table-search';
 
-export default async function Table({ currentPage }) {
-  const data = await fetchBook([''], currentPage);
-  const totalPages = await fetchBookPages('');
+export default async function Table({ query, currentPage }) {
+  const data = await fetchBook([query], currentPage);
+  const totalPages = await fetchBookPages([query]);
 
   return (
     <>
+      <TableSearch />
       <table className="min-w-full text-gray-900 bg-white dark:bg-gray-800">
         <thead className="rounded-lg text-left text-sm font-normal bg-gray-100 dark:bg-gray-900 dark:text-white">
           <tr>
@@ -38,13 +40,16 @@ export default async function Table({ currentPage }) {
         </thead>
         <tbody>
           {data.map((b) => (
-            <tr key={b.id} className="w-full border-b border-gray-200 text-sm last-of-type:border-none dark:text-gray-400 dark:border-white/20">
+            <tr
+              key={b.id}
+              className="w-full border-b border-gray-200 text-sm last-of-type:border-none dark:text-gray-400 dark:border-white/20"
+            >
               <td className="whitespace-nowrap px-3 py-3">{b.name}</td>
               <td className="whitespace-nowrap px-3 py-3">{b.tag.join(',')}</td>
               <td className="whitespace-nowrap px-2 py-3">{b.view_count}</td>
               <td className="whitespace-nowrap px-2 py-3">{b.download_count}</td>
               <td className="whitespace-nowrap px-3 py-3">
-                <div className='flex gap-x-2'>
+                <div className="flex gap-x-2">
                   <UpdateBtn data={b} />
                   <DelBtn id={b.id} name={b.name} />
                 </div>
@@ -55,7 +60,7 @@ export default async function Table({ currentPage }) {
       </table>
       <Pagination totalPages={totalPages} currentPage={currentPage}>
         {({ page, cls }) => (
-          <Link key={page} href={`/dashboard?page=${page}`} className={cls}>
+          <Link key={page} href={`/dashboard?page=${page}&query=${query}`} className={cls}>
             {page}
           </Link>
         )}

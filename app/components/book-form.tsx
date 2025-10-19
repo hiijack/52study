@@ -92,9 +92,11 @@ const BookForm = ({
           onClick={(e) => {
             setPending(true);
             if (formRef.current.reportValidity()) {
-              onSubmit(formRef.current).then(() => {
+              onSubmit(formRef.current).finally(() => {
                 setPending(false);
               });
+            } else {
+              setPending(false);
             }
             e.preventDefault();
           }}

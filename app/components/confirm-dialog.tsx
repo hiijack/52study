@@ -7,6 +7,12 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 function ConfirmDialog({ title, description, ok, open: op }) {
   const [open, setOpen] = useState(op);
 
+  const handleOk = () => {
+    ok().finally(() => {
+      setOpen(false);
+    })
+  };
+
   return (
     <Dialog open={open} onClose={setOpen} as="div" className="relative z-10">
       <DialogBackdrop
@@ -29,7 +35,7 @@ function ConfirmDialog({ title, description, ok, open: op }) {
                 <p className="whitespace-pre-wrap text-sm text-black dark:text-gray-400">{description}</p>
               </div>
               <div className="flex gap-2 mt-2 justify-end">
-                <button className='cursor-pointer rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white' onClick={ok}>确定</button>
+                <button className='cursor-pointer rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white' onClick={handleOk}>确定</button>
                 <button className='cursor-pointer rounded-md text-sm px-4 py-1 border font-medium border-gray-500 text-gray-500'>取消 </button>
               </div>
             </div>

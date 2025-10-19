@@ -1,5 +1,5 @@
 import postgres from 'postgres';
-import { Book, Card, SearchTrend, SearchType, User } from './definitions';
+import { Book, BookCard, SearchCard, SearchTrend, SearchType, User } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -20,12 +20,13 @@ export async function fetchBook(query: string[] = [''], currentPage: number = 1)
   }
 }
 
-export async function fetchBookPages(query: string) {
+export async function fetchBookPages(query: string[] = ['']) {
+  const nq = `{${query.map((q) => `%${q}%`)}}`;
   try {
     const data = await sql`
       SELECT COUNT(book.id) FROM book
-      WHERE book.name ILIKE ${`%${query}%`} OR
-        book.tag::text ILIKE ${`%${query}%`}`;
+      WHERE book.name ILIKE ANY (${nq}) OR
+        book.tag::text ILIKE ANY (${nq})`;
     const totalPages = Math.ceil(+data[0].count / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
@@ -45,12 +46,27 @@ export async function fetchCardData() {
     //   SELECT COUNT(aisearch.id) AS total_search
     //   FROM aisearch`;
     // return { ...bookCount[0], ...searchCount[0] };
-    const data = await sql<Card[]>`
+    const data = await sql<BookCard[]>`
       SELECT
       (SELECT COUNT(book.id) FROM book) AS total_record,
       (SELECT SUM(book.view_count) FROM book) AS total_view,
       (SELECT SUM(book.download_count) FROM book) AS total_download,
-      (SELECT COUNT(aisearch.id) FROM aisearch) AS total_search;
+      (SELECT SUM(array_length(book.tag, 1)) FROM book) AS total_tag;
+    `;
+    return data[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch card data.');
+  }
+}
+
+export async function fetchSearchCardData() {
+  try {
+    const data = await sql<SearchCard[]>`
+      SELECT
+        (SELECT COUNT(aisearch.id) FROM aisearch) AS total_search,
+        (SELECT COUNT(DISTINCT aisearch.params) FROM aisearch where tool = 'get-book') AS search_type,
+        (SELECT COUNT(aisearch.id) FROM aisearch where tool = 'get-popular-book') as popular_search;
     `;
     return data[0];
   } catch (error) {

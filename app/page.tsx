@@ -9,7 +9,7 @@ export const revalidate = 3600; // 1h
 
 export default async function Page() {
   const data = await fetchBook();
-  const totalPages = await fetchBookPages('');
+  const totalPages = await fetchBookPages();
   const pdata = await fetchPopularBooks();
   return (
     <>

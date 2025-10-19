@@ -3,11 +3,11 @@ import { type NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get('term') || '';
+  const query = searchParams.get('term') || ''; // todo
   const page = +searchParams.get('page') || 1;
   try {
     const data = await fetchBook([''], page);
-    const totalPages = await fetchBookPages(query);
+    const totalPages = await fetchBookPages();
     return Response.json({ code: 0, data, totalPages });
   } catch (error) {
     console.log(error);

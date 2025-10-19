@@ -1,0 +1,42 @@
+'use client';
+
+import { useRef } from 'react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useRouter, useSearchParams } from 'next/navigation';
+import CreateDialog from './create-dialog';
+
+const TableSearch = (props) => {
+  const inputRef = useRef(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  function search() {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+    params.set('query', inputRef.current.value || '');
+    router.replace(`/dashboard?${params.toString()}`);
+  }
+
+  return (
+    <form className="flex gap-x-2 items-center pb-2" action={search}>
+      <div className="relative flex flex-1 items-center rounded-md outline-1 dark:bg-white/5 pl-3 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-blue-400">
+        <input
+          className="block grow py-1.5 pr-3 pl-6 text-base text-gray-600 dark:text-gray-200 placeholder:text-gray-400 focus:outline-0 sm:text-sm/6"
+          placeholder="搜索"
+          ref={inputRef}
+          defaultValue={searchParams.get('query')?.toString()}
+        />
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-400" />
+      </div>
+      <button
+        type="submit"
+        className="cursor-pointer rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white"
+      >
+        查询
+      </button>
+      <CreateDialog />
+    </form>
+  );
+};
+
+export default TableSearch;

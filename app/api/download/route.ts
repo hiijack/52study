@@ -1,5 +1,4 @@
 import { updateDownloadCount } from "@/app/lib/actions";
-import { revalidatePath } from 'next/cache';
 import { type NextRequest } from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -7,7 +6,6 @@ export async function GET(req: NextRequest) {
   const id = searchParams.get('id');
   try {
     await updateDownloadCount(id);
-    revalidatePath('/');
     return Response.json({ code: 0 });
   } catch (error) {
     console.log(error);

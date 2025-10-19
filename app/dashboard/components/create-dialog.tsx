@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import BookForm from '@/app/components/book-form';
+import { useRouter } from 'next/navigation';
 
 export default function CreateDialog() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   async function addBook(form) {
     const fd = new FormData(form);
@@ -15,6 +17,7 @@ export default function CreateDialog() {
     const data = await res.json();
     if (data.code === 0) {
       setOpen(false);
+      router.refresh();
     } else {
       // empty
     }

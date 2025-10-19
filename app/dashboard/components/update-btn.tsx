@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import BookForm from './book-form';
+import BookForm from '../../components/book-form';
+import { useRouter } from 'next/navigation';
 
 function UpdateDialog(props) {
   const { data, onClose } = props;
@@ -17,7 +18,7 @@ function UpdateDialog(props) {
     const data = await res.json();
     if (data.code === 0) {
       setOpen(false);
-      // onClose();
+      onClose();
     } else {
       // empty
     }
@@ -49,11 +50,18 @@ function UpdateDialog(props) {
 }
 
 const UpdateBtn = ({ data }) => {
-
+  const router = useRouter();
   function createModal() {
     const fragment = document.createDocumentFragment();
     const root = createRoot(fragment);
-    root.render(<UpdateDialog data={data} />);
+    root.render(
+      <UpdateDialog
+        data={data}
+        onClose={() => {
+          router.refresh();
+        }}
+      />
+    );
     document.body.appendChild(fragment);
   }
 
