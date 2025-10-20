@@ -1,17 +1,36 @@
-import { useRef, useState } from 'react';
+'use client';
 
-const BookForm = ({
-  initValues = {},
-  onSubmit,
-}: {
-  initValues?: any;
-  onSubmit: (props) => Promise<void>;
-}) => {
-  const formRef = useRef(null);
-  const [isPending, setPending] = useState(false);
+import { useActionState } from 'react';
+import { addBook, updateBook } from '../lib/actions';
+
+const BookForm = ({ initValues = {}, onSuccess }: { initValues?: any; onSuccess?: () => void }) => {
+  async function submitBookForm(prevState, formData) {
+    try {
+      // console.log(formData);
+      const id = formData.get('id');
+      const name = formData.get('name');
+      const _tag = formData.get('tag');
+      const description = formData.get('description');
+      const download_url = formData.get('download_url');
+      const date = new Date().toISOString().split('T')[0];
+      const tag = `{${_tag}}`;
+      const data = { id, name, description, download_url, tag, date };
+      if (!id) {
+        await addBook(data);
+      } else {
+        await updateBook(data);
+      }
+      onSuccess();
+    } catch (error) {
+      console.error('add book error: ', error);
+      return `出错了，${error.message}`;
+    }
+  }
+
+  const [errorMsg, formAction, isPending] = useActionState(submitBookForm, undefined);
 
   return (
-    <form id="book-form" className="mt-4" ref={formRef}>
+    <form id="book-form" className="mt-4" action={formAction}>
       <div className="flex gap-4 mb-4">
         <label htmlFor="name" className="text-sm font-medium py-2 text-black dark:text-white">
           名字
@@ -84,22 +103,12 @@ const BookForm = ({
           </div>
         </div>
       </div>
+      {errorMsg && <p className="text-sm text-red-500">{errorMsg}</p>}
       <input type="hidden" name="id" defaultValue={initValues.id} />
       <div className="mt-4 text-right">
         <button
           type="submit"
           className="rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
-          onClick={(e) => {
-            setPending(true);
-            if (formRef.current.reportValidity()) {
-              onSubmit(formRef.current).finally(() => {
-                setPending(false);
-              });
-            } else {
-              setPending(false);
-            }
-            e.preventDefault();
-          }}
           disabled={isPending}
           aria-disabled={isPending}
         >

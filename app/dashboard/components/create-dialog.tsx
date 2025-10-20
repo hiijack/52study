@@ -2,26 +2,9 @@
 import { useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import BookForm from '@/app/components/book-form';
-import { useRouter } from 'next/navigation';
 
 export default function CreateDialog() {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-
-  async function addBook(form) {
-    const fd = new FormData(form);
-    const res = await fetch('/api/add-book', {
-      method: 'POST',
-      body: fd,
-    });
-    const data = await res.json();
-    if (data.code === 0) {
-      setOpen(false);
-      router.refresh();
-    } else {
-      // empty
-    }
-  }
 
   return (
     <section>
@@ -48,7 +31,7 @@ export default function CreateDialog() {
                 <DialogTitle as="h3" className="text-base/7 font-medium text-black dark:text-white">
                   新增
                 </DialogTitle>
-                <BookForm onSubmit={addBook} />
+                <BookForm onSuccess={() => setOpen(false)} />
               </div>
             </DialogPanel>
           </div>

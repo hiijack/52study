@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (Date.now() < (token.accessTokenExpires ?? 0)) {
         return token;
       }
-      console.log('refresh');
+      console.log('token refresh');
       return await refreshAccessToken(token);
     },
     async session({ session, token }) {

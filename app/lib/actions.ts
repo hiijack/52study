@@ -81,7 +81,6 @@ export async function deleteBook(id) {
     `;
     revalidatePath('/');
     revalidatePath('/dashboard');
-    return true;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to delete book.');

@@ -3,26 +3,10 @@ import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import BookForm from '../../components/book-form';
-import { useRouter } from 'next/navigation';
 
 function UpdateDialog(props) {
-  const { data, onClose } = props;
+  const { data } = props;
   const [open, setOpen] = useState(true);
-
-  async function updateBook(form) {
-    const fd = new FormData(form);
-    const res = await fetch('/api/update-book', {
-      method: 'POST',
-      body: fd,
-    });
-    const data = await res.json();
-    if (data.code === 0) {
-      setOpen(false);
-      onClose();
-    } else {
-      // empty
-    }
-  }
 
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -40,7 +24,7 @@ function UpdateDialog(props) {
               <DialogTitle as="h3" className="text-base/7 font-medium dark:text-white">
                 编辑
               </DialogTitle>
-              <BookForm initValues={data} onSubmit={updateBook} />
+              <BookForm initValues={data} onSuccess={() => setOpen(false)} />
             </div>
           </DialogPanel>
         </div>
@@ -50,18 +34,11 @@ function UpdateDialog(props) {
 }
 
 const UpdateBtn = ({ data }) => {
-  const router = useRouter();
+
   function createModal() {
     const fragment = document.createDocumentFragment();
     const root = createRoot(fragment);
-    root.render(
-      <UpdateDialog
-        data={data}
-        onClose={() => {
-          router.refresh();
-        }}
-      />
-    );
+    root.render(<UpdateDialog data={data} />);
     document.body.appendChild(fragment);
   }
 
