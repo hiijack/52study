@@ -7,8 +7,9 @@ export default function CreateDialog() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section>
+    <div>
       <button
+        type="button"
         className="cursor-pointer rounded-md text-sm px-4 py-1 bg-blue-500 font-medium text-white"
         onClick={() => {
           setOpen(true);
@@ -37,6 +38,6 @@ export default function CreateDialog() {
           </div>
         </div>
       </Dialog>
-    </section>
+    </div>
   );
 }

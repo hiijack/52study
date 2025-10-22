@@ -11,8 +11,8 @@ function ConfirmDialog({ title, description, ok, open: op }) {
   const handleOk = () => {
     setPending(true);
     ok().finally(() => {
-      setPending(false);
       setOpen(false);
+      setPending(false);
     });
   };
 
