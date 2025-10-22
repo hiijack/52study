@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     });
 
     const result: any = await generateText({
-      model: model.chatModel('qwen-plus'),
+      model: model.chatModel('qwen3-max'),
       system: 'You are a book search assistant.',
       tools: await client.tools(),
       prompt,
