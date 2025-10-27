@@ -4,7 +4,7 @@ import Modal from './modal';
 
 export default function Detail({ id, title, description, tag, download_url, children }) {
   return (
-    <div
+    <span
       className="cursor-pointer"
       onClick={() => {
         fetch(`/api/detail?id=${id}`);
@@ -12,6 +12,6 @@ export default function Detail({ id, title, description, tag, download_url, chil
       }}
     >
       {children}
-    </div>
+    </span>
   );
 }

@@ -16,9 +16,11 @@ const Book = (props) => {
           </span>
         ))}
       </div>
-      <Detail id={id} title={name} description={description} tag={tag} download_url={download_url}>
-        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 cursor-pointer">{description}</p>
-      </Detail>
+      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400 cursor-pointer">
+        <Detail id={id} title={name} description={description} tag={tag} download_url={download_url}>
+          {description}
+        </Detail>
+      </p>
       <div className="flex gap-4">
         <span className="flex item-center gap-2" title="浏览量">
           <EyeIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
