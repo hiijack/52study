@@ -27,7 +27,7 @@
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
     "jsonwebtoken": "^9.0.2",
-    "next": "^15.1.6",
+    "next": "15.1.9",
     "next-auth": "5.0.0-beta.25",
     "postcss": "^8.5.2",
     "postgres": "^3.4.5",
